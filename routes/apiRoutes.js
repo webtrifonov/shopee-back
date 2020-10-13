@@ -5,8 +5,6 @@ const passport = require('../utils/passport');
 const {getProducts} = require('./controller');
 
 const auth = (req, res, next) => {
-  console.log('req.body = ', req.body);
-
   if (req.isAuthenticated()) {
     next();
   } else {
@@ -42,5 +40,4 @@ router.post('/logout', (req, res) => {
   req.logout();
   res.send('Not authenticated')
 })
-// router.use('/bo ok', bookRoutes)
 module.exports = router;

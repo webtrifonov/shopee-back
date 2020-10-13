@@ -44,17 +44,14 @@ const userDB = {
 };
 
 passport.serializeUser(function(user, done) {
-  console.log('serializeUser', user);
+  console.log('Сериализация: ', user);
   done(null, user.id);
 });
 
 passport.deserializeUser(function(id, done) {
-  console.log('DEserializeUser', id);
-  const user = (userDB === id) ? userDB : false;
+  console.log('Десериализация: ', id);
+  const user = userDB.id === id ? userDB : false;
   done(null, user);
-  // User.findById(id, function(err, user) {
-  //   done(err, user);
-  // });
 });
 
 passport.use(
@@ -64,8 +61,6 @@ passport.use(
     done
   ) {
     if (email === userDB.email && password === userDB.password) {
-      console.log('userDB = ', userDB);
-
       return done(null, userDB);
     } else {
       return done(null, false);
