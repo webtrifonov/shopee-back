@@ -1,20 +1,16 @@
 const { v4: uuidv4 } = require('uuid');
 for (let i = 0; i < 10; i++) {
-  console.log(uuidv4());
+  console.info(uuidv4());
 }
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 
 // пароль пользователя
 const passwordFromUser = "123456";
-
-// создаем соль
-const salt = bcrypt.genSaltSync(10);
+const passwordFromDB = "2$ldhslfihsjhglhjh-h,bvmhcgvg";
 
 // шифруем пароль
-const passwordToSave = bcrypt.hashSync(passwordFromUser, salt)
-
-// выводим результат
-console.log(salt);
-console.log(passwordFromUser);
-console.log(passwordToSave);
+const hashedPassword = bcrypt.hashSync(passwordFromUser, 10);
+console.info(hashedPassword);
+// сравниваем
+bcrypt.compareSync(passwordFromUser, passwordFromDB);
 

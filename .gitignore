@@ -2,3 +2,4 @@
 node_modules
 .idea
 sessions
+id_rsa_priv.pem

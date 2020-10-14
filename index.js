@@ -1,33 +1,21 @@
 require('dotenv').config();
 const express = require('express');
 const path = require('path');
+const cors = require('cors');
 const sequelize = require('./utils/database');
-const session = require('express-session');
-const FileStore = require('session-file-store')(session);
 const passport = require('./utils/passport');
 const apiRoutes = require('./routes/apiRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-
-app.use(
-  session({
-    secret: 'hghtyNN23h',
-    store: new FileStore(),
-    cookie: {
-      path: '/',
-      httpOnly: true,
-      maxAge: 60 * 60 * 1000, // 3600 sec -> 1 hour
-    },
-    resave: false,
-    saveUninitialized: false,
-  })
-);
+// require('./utils/passport')(passport);
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cors());
+app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api', apiRoutes);
 
 const start = async () => {
