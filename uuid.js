@@ -5,7 +5,7 @@ for (let i = 0; i < 10; i++) {
 const bcrypt = require('bcryptjs');
 
 // пароль пользователя
-const passwordFromUser = "123456";
+const passwordFromUser = "Qwerty123!@#";
 const passwordFromDB = "2$ldhslfihsjhglhjh-h,bvmhcgvg";
 
 // шифруем пароль
