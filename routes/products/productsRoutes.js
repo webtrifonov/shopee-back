@@ -3,9 +3,12 @@ const {Product, Category} = require('../../models');
 const {Op} = require('sequelize');
 
 router.get('/', async (req, res) => {
-  const {order, ...filters} = req.query;
-
-  const orderStr = (order || 'ASC').toUpperCase();
+  const {orderType, orderValue, limit, offset, ...filters} = req.query;
+  console.log('>>> orderType = ', orderType);
+  console.log('>>> orderValue = ', orderValue);
+  console.log('>>> filters = ', filters);
+  const orderTypeValid = orderType || 'createdAt';
+  const orderValueValid = (orderValue || 'ASC').toUpperCase();
   const productsWhere = (filters) => {
     const where = {};
 
@@ -38,7 +41,7 @@ router.get('/', async (req, res) => {
 
     return where;
   }
-  const products = await Product.findAll({
+  const products = await Product.findAndCountAll({
     where: productsWhere(filters),
     include: [
       {
@@ -52,14 +55,19 @@ router.get('/', async (req, res) => {
       exclude: ['categoryId'],
     },
     order: [
-      ['createdAt', orderStr],
-      ['updatedAt', orderStr],
-      ['title', orderStr],
+      [orderTypeValid , orderValueValid],
+      ['createdAt', orderValueValid],
+      ['updatedAt', orderValueValid],
+      ['title', orderValueValid],
     ],
+    limit: limit || 10,
+    offset: offset || 0,
   });
   return res.status(200).json({
     success: true,
-    products: products,
+    count: products.count,
+    products: products.rows,
+
   });
 });
 router.get('/product/:id', async (req, res) => {
