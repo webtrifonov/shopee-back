@@ -3,7 +3,7 @@ const {Product, Category} = require('../../models');
 const {Op} = require('sequelize');
 
 router.get('/', async (req, res) => {
-  const {orderType, orderValue, limit, offset, ...filters} = req.query;
+  const {orderType, orderValue, limit = 10, offset = 0, ...filters} = req.query;
   console.log('>>> orderType = ', orderType);
   console.log('>>> orderValue = ', orderValue);
   console.log('>>> filters = ', filters);
@@ -60,8 +60,8 @@ router.get('/', async (req, res) => {
       ['updatedAt', orderValueValid],
       ['title', orderValueValid],
     ],
-    limit: limit || 10,
-    offset: offset || 0,
+    limit,
+    offset,
   });
   return res.status(200).json({
     success: true,
