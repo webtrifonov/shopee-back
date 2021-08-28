@@ -9,6 +9,9 @@ module.exports = {
             primaryKey: true,
             type: Sequelize.UUID
           },
+          url: {
+            type: Sequelize.STRING,
+          },
           messageId: {
             references: {
               model: 'messages',

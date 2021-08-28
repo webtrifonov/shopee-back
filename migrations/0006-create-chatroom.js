@@ -10,7 +10,6 @@ module.exports = {
             type: Sequelize.UUID
           },
           title: {
-            allowNull: true,
             type: Sequelize.STRING
           },
           cover: {
@@ -18,13 +17,13 @@ module.exports = {
             type: Sequelize.STRING
           },
           createdAt: {
-            allowNull: false,
-            type: Sequelize.DATE
+            type: Sequelize.DATE,
+            field: 'created_at',
           },
           updatedAt: {
-            allowNull: false,
-            type: Sequelize.DATE
-          }
+            type: Sequelize.DATE,
+            field: 'updated_at',
+          },
         }, {transaction: t}),
       ])
     );

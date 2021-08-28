@@ -14,7 +14,7 @@ const prodConfig = {
   dialect: 'postgres',
   postgresPort: 5432,
 }
-module.exports = {
+export default {
   development: devConfig,
   test: devConfig,
   production: prodConfig

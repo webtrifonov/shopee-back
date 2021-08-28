@@ -9,7 +9,6 @@ module.exports = {
             primaryKey: true,
             type: Sequelize.UUID
           },
-
           isBlocked: {
             type: Sequelize.BOOLEAN,
             field: 'is_blocked',
@@ -33,6 +32,14 @@ module.exports = {
             },
             type: Sequelize.UUID,
             field: 'user_id',
+          },
+          createdAt: {
+            type: Sequelize.DATE,
+            field: 'created_at',
+          },
+          updatedAt: {
+            type: Sequelize.DATE,
+            field: 'updated_at',
           },
         }, {transaction: t}),
       ])

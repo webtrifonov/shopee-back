@@ -1,15 +1,18 @@
-require('dotenv').config();
-const express = require('express');
-const path = require('path');
-const cors = require('cors');
-const sequelize = require('./utils/database');
-const passport = require('./utils/passport');
-const apiRoutes = require('./routes/apiRoutes');
-const { socketioServer } = require('./utils/socketio');
+import dotenv from 'dotenv';
+dotenv.config();
+import express from 'express';
+import http from 'http';
+import path from 'path';
+import cors from 'cors';
+import sequelize from './utils/database';
+import passport from './utils/passport';
+import SocketIO from './socket/socketio';
+import apiRoutes from './routes/apiRoutes';
+// const { socketioServer } from './socket/socketio');
 const app = express();
-const httpServer = require('http').Server(app);
-socketioServer(httpServer);
-
+const httpServer = http.Server(app);
+export const socketIo = new SocketIO(httpServer);
+socketIo.connection();
 const PORT = process.env.PORT || 3000;
 
 
